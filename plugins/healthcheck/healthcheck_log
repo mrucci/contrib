@@ -112,7 +112,7 @@ if [ "$1" = "config" ]; then
          echo "$name.draw LINE2"
          echo "$name.min 0"
          echo "$name.max 20"
-         echo "$name.critical 0:0"
+         echo "#$name.critical 0:0"
     done
 
     exit 0
