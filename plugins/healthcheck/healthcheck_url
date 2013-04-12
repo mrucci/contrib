@@ -123,10 +123,10 @@ if [ "$1" = "config" ]; then
 
          echo "$name.label $name"
          echo "$name.info $url"
-         echo "$name.draw LINE2"
-         echo "$name.min -10"
+         echo "$name.draw LINE1"
+         #echo "$name.min -1"
          echo "$name.max ${slowspeed15}"
-         echo "$name.critical 0:${slowspeed}"
+         #echo "$name.critical 0:${slowspeed}"
     done
 
     exit 0
@@ -134,6 +134,7 @@ fi
 
 for(( I = 1; I < $CHECKMAX; ++I ))
 do
+     (
      eval url=\$url_${I}
      eval grep=\$htmlgrep_${I}
      eval size=\$htmlsize_${I}
@@ -164,7 +165,7 @@ do
      END=`date +%s.%N`
 
      if [ $CURLEXITCODE -ne 0 ]; then
-         echo "$name.value -10"
+         echo "$name.value U"
          echo "$name.extinfo curl return $CURLEXITCODE"
          continue
      fi
@@ -174,7 +175,7 @@ do
          echo $HTML_RESULT | egrep -i "${grep}" > /dev/null
          GREPEXITCODE=$?
          if [ $GREPEXITCODE -ne 0 ]; then
-             echo "$name.value -9"
+             echo "$name.value U"
              echo "$name.extinfo can not found $grep regex strings"
              continue
          fi
@@ -183,7 +184,7 @@ do
 
      if [ "x${size}" != "x" ]; then
          if [ ${#HTML_RESULT} -lt ${size} ]; then
-             echo "$name.value -8"
+             echo "$name.value U"
              echo "$name.extinfo html size ${#HTML_RESULT} is smaller than ${size}"
              continue
          fi
@@ -191,4 +192,7 @@ do
 
      SPEED="$(echo "$END - $START" | bc)"
      echo "$name.value $SPEED"
+     )&
 done
+
+wait
