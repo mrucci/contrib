@@ -158,10 +158,10 @@ do
      fi
      let timeout="${slowspeed} + 1"
 
-     START=`date +%s`
+     START=`date +%s.%N`
      HTML_RESULT=`$CURL "${url}" -s --connect-timeout ${timeout} ${PROXY_CMD}`
      CURLEXITCODE=$?
-     END=`date +%s`
+     END=`date +%s.%N`
 
      if [ $CURLEXITCODE -ne 0 ]; then
          echo "$name.value -10"
@@ -189,7 +189,6 @@ do
          fi
      fi
 
-
-     let SPEED="$END - $START"
+     SPEED="$(echo "$END - $START" | bc)"
      echo "$name.value $SPEED"
 done
