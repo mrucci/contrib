@@ -103,7 +103,7 @@ if [ "$1" = "config" ]; then
          if [ "x${name}" = "x" ]; then
              name=`echo $log | sed 's#[/|\.]#_#g'`
          fi
-         if [ "x${name}" = "x" ]; then
+         if [ "x${grep}" = "x" ]; then
              grep="critical|error|crash|fatal|kernel"
          fi
 
