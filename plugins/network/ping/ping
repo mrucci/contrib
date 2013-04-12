@@ -163,7 +163,7 @@ for (my $host_i = 0; $host_i < @host_addrs; ++$host_i) {
 		my $h_cur_name = $h_resolv ? $h_name . " ($h_addr)" : $h_name;
 		my $h_norm_name = clean_fieldname($h_cur_name);
 		if ($config_mode) {
-			print "$h_norm_name.min 0\n$h_norm_name.label $h_cur_name\n$h_norm_name.draw LINE2\n";
+			print "$h_norm_name.min 0\n$h_norm_name.label $h_cur_name\n$h_norm_name.draw LINE1\n";
                         my ( $warning, $critical ) =
                             get_thresholds($h_norm_name);
                         printf "%s.warning %s\n", $h_norm_name, $warning
