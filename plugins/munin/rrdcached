@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Author: Marco Rucci <rucci@kooaba.com>
+
+case $1 in
+   config)
+        cat <<'EOM'
+graph_title rrdcached statistics
+graph_category munin
+QueueLength.label Queue Length
+UpdatesReceived.label Updates received
+FlushesReceived.label Flushes Received
+UpdatesWritten.label Updates Written
+DataSetsWritten.label Datasets Written
+TreeNodesNumber.label Tree Nodes Number
+TreeDepth.label Tree Depth
+JournalBytes.label Journal Bytes
+JournalRotate.label Journal Rotate
+EOM
+        exit 0;;
+esac
+
+echo "STATS" | socat - /var/run/rrdcached.sock | sed -n '2,$ p' | awk -F: '{print $1 ".value" $2}'
+
